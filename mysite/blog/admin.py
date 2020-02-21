@@ -1,0 +1,34 @@
+from django.contrib import admin
+from django import forms
+# Register your models here.
+from .models import Post, Menu, Genre
+from ckeditor.widgets import CKEditorWidget
+
+
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'status','created_on')
+    list_filter = ("status",)
+    search_fields = ['title','image', 'content']
+    prepopulated_fields = {'slug': ('title',)}
+  
+
+class CategoriaAdmin(admin.ModelAdmin):
+     prepopulated_fields = {'slug': ('titulo',)}
+
+
+
+class PostAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = Post
+        fields = '__all__'
+
+class PostAdmin(admin.ModelAdmin):
+    form = PostAdminForm
+
+class MenuAdmin(admin.ModelAdmin):
+    list_display = ('name')
+
+#class Post  
+admin.site.register(Post, PostAdmin)
+admin.site.register(Genre)

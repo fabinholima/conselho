@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-8 mt-3 left">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">Contato</h2>
+                </br>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Send</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+
+        </div>
+        {% block category %} {% include 'category.html' %} {% endblock category %}
+
+    </div>
+</div>
+
+
+{% endblock content %}
