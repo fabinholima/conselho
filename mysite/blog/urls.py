@@ -9,9 +9,9 @@ urlpatterns = [
     path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
     #path('', views.CategoryList.as_view(), name='category'),
     #path('category', show_menu, name='nodes'),
-    path('search', SearchPostsView.as_view(), name='search'),
+    path('search', searchview, name='search'),
     path('about', about_view, name='about' ),
     path('contact', emailView, name='contact' ), 
-    path('genres', GenreListView.as_view(), name='genres'),
+    #path('genres', GenreListView.as_view(), name='genres'),
 
 ]

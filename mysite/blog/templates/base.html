@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Blog Template">
-    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <meta name="author" content="Fabio Lima">    
     <link rel="shortcut icon" href="favicon.ico"> 
     
     <!-- FontAwesome JS-->
@@ -59,15 +59,17 @@
           <a class="nav-link disabled" href="{% url 'contact' %}">Disabled</a>
         </li>
       </ul>
-      <form class="form-inline mt-2 mt-md-0">
+      <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'search' %}">
         <input class="form-control mr-sm-2" 
-        method="GET" action="{% url 'search' %}"
-         type="text" placeholder="Search" 
-         aria-label="Search" value="{{ q }}">
+         type="text" placeholder="Search" id="id_q" 
+         aria-label="Search" name="q" value="{{query}}">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
   </nav>
+  <script type="text/javascript">
+    document.getElementsById().value= "((query))"
+  </script>
 
 <!-- Codigo about-->
  
@@ -99,7 +101,7 @@
    
           <div class="my-2 my-md-3">
               
-              <a class="btn btn-primary" href="https://themes.3rdwavemedia.com/" target="_blank">Veja Mais</a>
+              <a class="btn btn-primary" href="#" target="_blank">Veja Mais</a>
               
           </div>
       </div>
