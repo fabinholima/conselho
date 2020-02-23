@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django import forms
 # Register your models here.
-from .models import Post, Menu, Genre
+from .models import Post, Category
 from ckeditor.widgets import CKEditorWidget
 
 
@@ -26,9 +26,6 @@ class PostAdminForm(forms.ModelForm):
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
 
-class MenuAdmin(admin.ModelAdmin):
-    list_display = ('name')
-
 #class Post  
 admin.site.register(Post, PostAdmin)
-admin.site.register(Genre)
+admin.site.register(Category)

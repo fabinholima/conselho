@@ -18,7 +18,9 @@
     
     <!-- FontAwesome JS-->
     <script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
-    
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <!-- Math Ajax-->
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -30,101 +32,101 @@
     
    <!-- <link id="theme-style" rel="stylesheet" href="{% static 'css/theme.css' %}" >
     -->
-    <!-- Corpo-->
-
-    <link id=theme-style rel="stylesheet" href="{% static 'css/theme.css' %}" > 
     
-<!-- Estilos customizados para esse template -->
-
-
+    <link id=theme-style rel="stylesheet" href="{% static 'css/theme.css' %}"> 
+    
     
 </head>
-<br>
 <body>
 
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-light">
     <a class="navbar-brand" href="{% url 'home' %}">Blog</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item ">
+          <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="{% url 'category' %}">Categorias</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="{% url 'contact' %}">Disabled</a>
+          <a class="nav-link" href="{% url 'contact' %}">Contato</a>
         </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'search' %}">
         <input class="form-control mr-sm-2" 
          type="text" placeholder="Search" id="id_q" 
-         aria-label="Search" name="q" value="{{query}}">
+         aria-label="Search" name="q" required value="{{ request.GET.q}}">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
   </nav>
-  <script type="text/javascript">
-    document.getElementsById().value= "((query))"
-  </script>
+  
 
 <!-- Codigo about-->
- 
-
-<header class="header text-center">	    
-  <h1 class="blog-name pt-lg-4 mb-0"><a href="{% url 'home' %}"> </a></h1>
-  
-  <nav class="navbar navbar-expand-lg navbar-dark" >
-     
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div id="navigation" class="collapse navbar-collapse flex-column" >
-          <div class="profile-section pt-3 pt-lg-0">
-              <img class="profile-image mb-3 rounded-circle mx-auto" src="{% static 'assets/images/profile2.png' %}" alt="image" >			
-              
-              <div class="bio mb-3">Meu nome é Fabio sou formado em Química e nas horas vagas estudo programação .<br><a href="{% url 'about' %}">Sobre mim</a></div><!--//bio-->
-              <ul class="social-list list-inline py-3 mx-auto">
-                  <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
-                  <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
-                  <li class="list-inline-item"><a href="#"><i class="fab fa-github-alt fa-fw"></i></a></li>
-                 <!-- <li class="list-inline-item"><a href="#"><i class="fab fa-stack-overflow fa-fw"></i></a></li> 
-                  <li class="list-inline-item"><a href="#"><i class="fab fa-codepen fa-fw"></i></a></li> -->
-              </ul><!--//social-list-->
-              <hr> 
-          </div><!--//profile-section-->
-          
-   
-          <div class="my-2 my-md-3">
-              
-              <a class="btn btn-primary" href="#" target="_blank">Veja Mais</a>
-              
-          </div>
-      </div>
-  </nav>
-  <footer class="footer text-center py-2 theme-bg-dark">
-     
-    <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
-    <small class="copyright">Designed <i class="fas fa-heart" style="color: #fb866a;"></i> by <a href="http://github.com/fabiodellima" target="_blank">Fabio Lima</a> for developers</small>
-  
-  </footer>
-
-</header>
-
-
- 
-
 
 {% block content %}
 
 
 {% endblock content %}
 
-  
+
+   
+
+
+
+<!-- Footer -->
+<footer class="page-footer font-small special-color-dark pt-4">
+
+  <!-- Footer Elements -->
+  <div class="container">
+
+    <!-- Social buttons -->
+    <ul class="list-unstyled list-inline text-center">
+      <li class="list-inline-item">
+        <a class="btn-floating btn-fb mx-1">
+          <i class="fab fa-facebook-f"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating btn-tw mx-1">
+          <i class="fab fa-twitter"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating btn-gplus mx-1">
+          <i class="fab fa-google-plus-g"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating btn-li mx-1">
+          <i class="fab fa-linkedin-in"> </i>
+        </a>
+      </li>
+      <li class="list-inline-item">
+        <a class="btn-floating btn-dribbble mx-1">
+          <i class="fab fa-dribbble"> </i>
+        </a>
+      </li>
+    </ul>
+    <!-- Social buttons -->
+
+  </div>
+  <!-- Footer Elements -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="#"> Fabio Lima</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+
 
 </div><!--//main-wrapper-->
 
@@ -134,5 +136,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script id="dsq-count-scr" src="//fabiolima-com-br.disqus.com/count.js" async></script>
     </html>
 

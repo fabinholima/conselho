@@ -7,7 +7,7 @@ from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 # Create your views here.
 from django.views.generic import CreateView
-from .models import Post, Category, Menu, Genre
+from .models import Post, Category
 from .forms import ContactForm
 from django.db.models import Q
 from operator import attrgetter
@@ -56,36 +56,39 @@ class PostDetail(generic.DetailView):
     model = Post
     template_name = 'post_detail.html'
 
-#
-class CategoryView(CreateView):
-    model=Category
-    fields = ('name')
+
+
+class CategoryList(generic.ListView):
+    model = Category
+    template_name = 'category.html'
+    context_object_name = 'category'
+    def menu(request):
+        return {
+            'category':Category.objects.all().order_by('-name')
+        }
+
 
 #
 class PostCreateView(CreateView):
     model = Post
     fields = ('title', 'category', 'slug', 'author', 'updated_on', 'content', 'image', 'created_on', 'status')
 
-def searchview(request):
-    context= {}
-    query= ""
-    if request.GET:
-        query=request.GET['q']
-        context['query']=str(query)
-        posts = sorted(Post.objects.all(), key=attrgetter('created_on'), reverse=True)
-        context['post']=posts
-        return render(request, 'blog_search.html', context)
 
 
-def search(query=None):
-    queryset = []
-    queries = query.split(" ")
-    for q in queries:
-        posts= Post.objects.filter(
-            Q(title__icontains=q) |
-            Q(body__icontains=q)
-            ).distinct()
 
-        for post in posts:
-            queryset.append(post)
-        return list(set(queryset))
+class SearchView(ListView):
+    template_name = 'search.html'
+    model = Post
+    #context_object_name = 'search'
+
+    
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Post.objects.filter(Q(content__icontains=query) | Q(title__icontains=query))
+            #object_list = self.model.objects.filter(name__icontains=query)
+        else:
+            return Post.objects.all()
+            #object_list = self.model.objects.none()
+        #return object_list    
+

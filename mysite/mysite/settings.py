@@ -39,12 +39,24 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'ckeditor',
-    'mptt',
+    'ckeditor_uploader',
     'blog',
+    
 ]
 
+
+MPTT_ADMIN_LEVEL_INDENT = 20
+
+DISQUS_API_KEY = 'rEjySLXstCEkTXaqPm2ERXbNxNt63qYuIJXJMfreUFlXwTQXpW7STrPox7m9siuA'
+DISQUS_WEBSITE_SHORTNAME = 'foobar'
+
+
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 CKEDITOR_UPLOAD_PATH = "/media/uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+#CKEDITOR_UPLOAD_PATH = os.path.join(MEDIA_ROOT, "ckeditor")
 CKEDITOR_RESTRICT_BY_USER = True
+CKEDITOR_UPLOAD_SLUGIFY_FILENAME= False
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
@@ -53,7 +65,8 @@ CKEDITOR_CONFIGS = {
         'mathJaxLib': '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join(
-            [
+            [   
+                'image',
                 'div',
                 'autolink',
                 'autogrow',
@@ -67,7 +80,9 @@ CKEDITOR_CONFIGS = {
                 'embed',
                 'codesnippet',
                 'image2',
-            ]),
+
+            ]
+       ),
     
     },
 }
@@ -92,7 +107,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,6 +131,21 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
+## PostgreSQL
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mydatabase',
+        'USER': 'mydatabaseuser',
+        'PASSWORD': 'mypassword',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+''' 
 
 
 # Password validation
@@ -171,7 +201,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 #STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "/home/fabio/apps/blog/static"),
+    os.path.join(BASE_DIR, "/home/lima/apps/conselho/static"),
 )
 
 

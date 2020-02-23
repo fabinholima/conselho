@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
-from mptt.models import MPTTModel, TreeForeignKey
-
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Category(models.Model):
@@ -29,29 +28,7 @@ class Category(models.Model):
         return ' -> '.join(full_path[::-1])
 
 
-class Menu(MPTTModel):
-    name = models.CharField(max_length=50, null=True)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
-    def __str__(self):
-        return self.name
-    
-    class MPTTMeta:
-        order_insertion_by = ['name']
 
-
-
-
-class Genre(MPTTModel):
-    name = models.CharField(max_length=50, unique=True)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
-    def __str__(self):
-        return self.name
-    class MPTTMeta:
-        order_insertion_by = ['name']
-
-
-def show_genres(request):
-    return render(request, "category.html", {'genres': Genre.objects.all()})
 
 STATUS = (
     (0,"Draft"),
@@ -60,13 +37,15 @@ STATUS = (
 
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
-    category = models.ForeignKey(Menu,on_delete= models.CASCADE)
+    category = models.ForeignKey(Category,on_delete= models.CASCADE)
     slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey(User, on_delete= models.CASCADE,related_name='blog_posts')
     updated_on = models.DateTimeField(auto_now= True)
     content = models.TextField()
-    #content = RichTextField(verbose_name='BlogContent',null=True,blank=True)
-    image = models.ImageField(upload_to='static/blog/uploads/%Y/%m/%d/', blank=True, null=True)
+    height=models.IntegerField(null=True, blank=True)
+    width=models.IntegerField(null=True, blank=True)
+    image = models.ImageField(upload_to='static/blog/uploads/%Y/%m/%d/', null=True, blank=True)
+    caption_image = models.CharField(max_length=200, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
 

@@ -1,13 +1,11 @@
-{% extends "base.html" %} 
-
-{% block content %}  
+{% extends "base.html" %}
+{% block content %}
 
 
 
 <div class="jumbotron" style="width:1700px">
 {% for post in post_list %}
   <h1 class="display4">{{ post.title | safe}}</h1>
-  <p class="lead">{{ post.author }} | {{ post.created_on}}</p>
   <hr class="my-text">
   <p>{{post.content| safe | slice:":600" }}</p>
   <p class=" ">
@@ -44,22 +42,5 @@
 
   </div>
 </div>
-  {% endblock %}
 
-
-
-
-
-<!-- 
-<div class="pagination">
-        <a href="#" class="prev"><i class="fa fa-angle-double-left"></i> Prev</a>
-        <a href="#" class="page-number">1</a>
-        <a href="#" class="page-number">2</a>
-        <a href="#" class="page-number active">3</a>
-        <a href="#" class="page-number">4</a>
-        <a href="#" class="page-number">5</a>
-        <a href="#" class="next">Next <i class="fa fa-angle-double-right"></i></i></a>
-    </div>
-
-
-    -->
+{% endblock content%}
