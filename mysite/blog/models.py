@@ -2,12 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.utils.translation import ugettext as _
+#from tinymce.models import HTMLField
+
+
+
 
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField()
     parent = models.ForeignKey('self',blank=True, null=True ,related_name='children',on_delete= models.CASCADE)
+
+
+    #def get_absolute_url(self):
+    #    return reverse('category', kwargs={'slug': self.slug})
+    
+    def get_absolute_url(self):
+        return "/categories/%s/"%self.slug
 
     class Meta:
         #enforcing that there can not be two categories under a parent with same slug
@@ -17,7 +29,8 @@ class Category(models.Model):
         # __str__ if you are using python 2
 
         unique_together = ('slug', 'parent',)    
-        verbose_name_plural = "categories"     
+        verbose_name_plural = "categories" 
+
 
     def __str__(self):                           
         full_path = [self.name]                  
@@ -26,6 +39,7 @@ class Category(models.Model):
             full_path.append(k.name)
             k = k.parent
         return ' -> '.join(full_path[::-1])
+
 
 
 
@@ -42,6 +56,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete= models.CASCADE,related_name='blog_posts')
     updated_on = models.DateTimeField(auto_now= True)
     content = models.TextField()
+    #content = HTMLField()
     height=models.IntegerField(null=True, blank=True)
     width=models.IntegerField(null=True, blank=True)
     image = models.ImageField(upload_to='static/blog/uploads/%Y/%m/%d/', null=True, blank=True)

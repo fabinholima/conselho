@@ -5,6 +5,7 @@ from django.views import generic
 from django.core.paginator import Paginator
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 # Create your views here.
 from django.views.generic import CreateView
 from .models import Post, Category
@@ -42,7 +43,6 @@ def about_view(request):
 
 
 
-
 class PostList(generic.ListView):
     model = Post
     template_name = 'index.html'
@@ -58,37 +58,71 @@ class PostDetail(generic.DetailView):
 
 
 
-class CategoryList(generic.ListView):
+
+class SearchView(ListView):
+    template_name = 'search.html'
+    model = Post
+        
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Post.objects.filter(Q(content__icontains=query) | Q(title__icontains=query))
+            
+        else:
+            return Post.objects.all()
+            
+  
+class CategoryViewAll(ListView):
     model = Category
     template_name = 'category.html'
     context_object_name = 'category'
     def menu(request):
         return {
             'category':Category.objects.all().order_by('-name')
-        }
+    }
+
+ 
+class CategoryView(ListView):
+    """
+    Displays the list of posts in a given category
+    Template: ``blog_posts_list.html``
+    Specific context variables:
+    - ``posts``
+    - ``page_title``
+    """
+    model = Post
+    template_name = 'post_list.html'
+    def get_queryset(self):
+        category = get_object_or_404(Category, slug=self.kwargs['slug'])
+        self.page_title = _('Posts in "{0}" category'.format(category.name))
+        return Post.objects.published().filter(categories__pk=category.pk)
 
 
+
+
+class CategoryListView(ListView):
+    """
+    Displays the list of categories that have posts in them
+    Template: ``blog_categories_list.html``
+    Specific context variables:
+    - ``categories``
+    """
+    template_name = 'category.html'
+    queryset = Category.objects.all()
+    context_object_name = 'category'
+
+
+
+
+
+#---------------------------
+# Class for add Posts
 #
 class PostCreateView(CreateView):
     model = Post
     fields = ('title', 'category', 'slug', 'author', 'updated_on', 'content', 'image', 'created_on', 'status')
 
 
-
-
-class SearchView(ListView):
-    template_name = 'search.html'
-    model = Post
-    #context_object_name = 'search'
-
-    
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query:
-            return Post.objects.filter(Q(content__icontains=query) | Q(title__icontains=query))
-            #object_list = self.model.objects.filter(name__icontains=query)
-        else:
-            return Post.objects.all()
-            #object_list = self.model.objects.none()
-        #return object_list    
-
+#================
+#  Class for delete 
+#

@@ -2,7 +2,7 @@
 {% block content %}
 
 
-
+{% if post_list %}
 <div class="jumbotron" style="width:1700px">
 {% for post in post_list %}
   <h1 class="display4">{{ post.title | safe}}</h1>
@@ -14,6 +14,11 @@
 {% endfor %}
 </div>
 
+{% else %}
+
+<p>Não existem posts para essa categoria.</p>
+
+{% endif %}
 
 
 

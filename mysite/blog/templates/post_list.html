@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+{% if post_list %}
+<div class="jumbotron" style="width:1700px">
+{% for post in post_list %}
+  <h1 class="display4">{{ post.title | safe}}</h1>
+  <hr class="my-text">
+  <p>{{post.content| safe | slice:":600" }}</p>
+  <p class=" ">
+    <a class="btn btn-primary btn-lg" href="{% url 'post_detail' post.slug  %}" role="button">Learn more</a>
+  </p>
+{% endfor %}
+</div>
+
+{% else %}
+
+<p>Não existem posts para essa categoria.</p>
+
+{% endif %}
+
+{% endblock %}

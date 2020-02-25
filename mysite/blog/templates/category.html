@@ -1,12 +1,17 @@
 
+{% block category %}
 
 
+<h2>Categorias</h2>
+     {% if post_list %}
+         <ul>
+         {% for list in post_list %}
+        <li><a href="#">{{ list.category }}<a></li>
+         {% endfor %}
+         </ul>
+     {% else %}
+         <p>Não há nenhuma categoria adicionada.</p> 
+     {% endif %}
 
- <div class="vertical-menu">
-    {% for list in category %}
-  <a href="#" class="active">{{ list.name }}</a>
-  
-  {% endfor %}
-  </div>
 
-
+{% endblock category %}

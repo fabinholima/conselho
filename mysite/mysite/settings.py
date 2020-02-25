@@ -40,15 +40,23 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
+ #   'tinymce',
+ #   'sorl.thumbnail',
+ #   'mce_filebrowser',
     'blog',
     
 ]
 
 
+## Config para authethication
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+
+
+
 MPTT_ADMIN_LEVEL_INDENT = 20
 
-DISQUS_API_KEY = 'rEjySLXstCEkTXaqPm2ERXbNxNt63qYuIJXJMfreUFlXwTQXpW7STrPox7m9siuA'
-DISQUS_WEBSITE_SHORTNAME = 'foobar'
 
 
 CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
@@ -80,6 +88,7 @@ CKEDITOR_CONFIGS = {
                 'embed',
                 'codesnippet',
                 'image2',
+                'imagebrowser',
 
             ]
        ),
@@ -89,6 +98,10 @@ CKEDITOR_CONFIGS = {
 
 
 CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
+
+ 
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -115,6 +128,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blog.context_processors.category_view',
             ],
         },
     },
@@ -210,6 +224,54 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
 MEDIAFILES_DIRS = (
     os.path.join(BASE_DIR, "media"),
 )
+
+
+
+
+
+
+''' 
+STATIC_JS_DIR = os.path.join(STATIC_URL)
+TINYMCE_JS_ROOT = os.path.join(STATIC_JS_DIR, "tiny_mce")
+TINYMCE_JS_URL = os.path.join(TINYMCE_JS_ROOT, "tiny_mce.js")
+
+
+
+
+TINYMCE_DEFAULT_CONFIG = {
+'theme': "advanced", # default value
+'relative_urls': True, # default value
+'plugins': 'table,spellchecker,paste,searchreplace,bbcode,advimage, visualblocks, autosave, latex',
+'theme_advanced_buttons1': 'bold,italic,underline,bullist,numlist,link,unlink,styleselect,fontselect,fontsizeselect, code, paste, code, , image, advimage,',
+'theme_advanced_buttons1_add': 'cut, latex',
+'width': '70%',
+'height': 500,
+'toolbar_items_size': 'Big',
+'paste_text_sticky': True,
+'paste_text_sticky_default': True,
+'valid_styles': 'font-weight,font-style,text-decoration',
+'file_browser_callback': 'mce_filebrowser',
+'fontsize_formats': "8pt 10pt 11pt 12pt 13pt 14pt 16pt 18pt 20pt 24pt 36pt",
+'font_formats': "Andale Mono=andale mono,times;" +
+    "Arial=arial,helvetica,sans-serif;" +
+    "Arial Black=arial black,avant garde;" +
+    "Book Antiqua=book antiqua,palatino;" +
+    "Comic Sans MS=comic sans ms,sans-serif;" +
+    "Courier New=courier new,courier;" +
+    "Georgia=georgia,palatino;" +
+    "Helvetica=helvetica;" +
+    "Impact=impact,chicago;" +
+    "Symbol=symbol;" +
+    "Tahoma=tahoma,arial,helvetica,sans-serif;" +
+    "Terminal=terminal,monaco;" +
+    "Times New Roman=times new roman,times;" +
+    "Trebuchet MS=trebuchet ms,geneva;" +
+    "Verdana=verdana,geneva;" +
+    "Webdings=webdings;" +
+    "Wingdings=wingdings,zapf dingbats",}
+
+'''
+
 
 
 #MEDIA_URL='/media/'

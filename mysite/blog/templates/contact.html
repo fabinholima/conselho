@@ -4,8 +4,21 @@
 
 {% block content %}
 
+ 
+<h2>Categorias</h2>
+     {% if post_list %}
+         <ul>
+         {% for list in post_list %}
+        <li><a href="#">{{ list.category }}<a></li>
+         {% endfor %}
+         </ul>
+     {% else %}
+         <p>Não há nenhuma categoria adicionada.</p> 
+     {% endif %}
 
-<div class="container">
+
+<div class="form-contact">
+
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8 mt-3 left">
@@ -17,7 +30,7 @@
                     {% csrf_token %}
                     {{ form|crispy }}
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-success">Send</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
                     </div>
                 </form>
                 </div>
@@ -25,8 +38,9 @@
 
         </div>
 
+   
+
     </div>
 </div>
-
 
 {% endblock content %}
