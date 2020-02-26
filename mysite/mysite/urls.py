@@ -17,12 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+#from blog.feeds import LastEntriesFeed
+
 
 urlpatterns = [
     #url('ckeditor/', include('ckeditor.urls')),
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
     path('account/', include('django.contrib.auth.urls')),
+    #path('api/', include('blog.api.urls')),  # REST api
+
+
 
 ] 
 

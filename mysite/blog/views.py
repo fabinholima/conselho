@@ -1,17 +1,42 @@
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import generic
-from django.core.paginator import Paginator
-from django.views.generic import TemplateView
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-# Create your views here.
-from django.views.generic import CreateView
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
+
 from .models import Post, Category
+from taggit.models import Tag
+
 from .forms import ContactForm
+
+# complex lookups (for searching)
 from django.db.models import Q
-from operator import attrgetter
+
+from django.urls import reverse_lazy
+
+# class based views
+from django.views.generic.edit import CreateView, DeleteView, UpdateView, FormView
+
+from django.views import View
+from django.utils.decorators import method_decorator
+
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django.views.generic.base import TemplateView
+
+from django.views.generic.dates import YearArchiveView, MonthArchiveView, DayArchiveView
+
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    PermissionRequiredMixin,
+)
+
+from django.db import transaction
+
+
+
+### Form contact 
 
 def emailView(request):
     if request.method == 'GET':
@@ -27,102 +52,165 @@ def emailView(request):
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect('success')
-    return render(request, "contact.html", {'form': form})
+    return render(request, "blog/contact.html", {'form': form})
 
 def successView(request):
     return HttpResponse('Success! Thank you for your message.')
 
 
+
+
+class CategoryDatesMixin:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        # get queryset of datetime objects for all published posts
+        context["dates"] = Post.objects.filter(status="PUBLISHED").datetimes(
+            field_name="published_date", kind="month", order="DESC"
+        )
+        context["recent_posts"] = Post.objects.filter(status="PUBLISHED").order_by(
+            "-published_date"
+        )[:3]
+        return context
+
+
 def about_view(request): 
     # render function takes argument  - request 
     # and return HTML as response 
-    return render(request, "about.html") 
+    return render(request, "blog/about.html") 
 
 #class About(generic.AboutView):
 #    templeate_name= 'about.html'
 
 
 
-class PostList(generic.ListView):
+class ListPosts(CategoryDatesMixin, ListView):
     model = Post
-    template_name = 'index.html'
-    #template_name = 'category.html'
+    template_name = 'blog/index.html'
     paginate_by = 2
-    queryset = Post.objects.filter(status=1).order_by('-created_on')
+    #ordering= ("-published_date",)
+    #queryset = Post.objects.filter(status=1).order_by('-published_date')
     #queryset = Post.objects.filter(status=1).order_by('-category')
 
-    
-class PostDetail(generic.DetailView):
+
+
+
+class ListByAuthor(CategoryDatesMixin, ListView):
     model = Post
-    template_name = 'post_detail.html'
+    context_object_name = "posts"
+    template_name = "posts/post_by_author.html"
+    paginate_by = 5
+    ordering = ("-published_date",)
+
+    def get_queryset(self):
+        author = self.kwargs.get("author", None)
+        results = []
+        if author:
+            results = Post.objects.filter(author__username=author)
+        return results
+
+    def get_context_data(self, **kwargs):
+        """
+        Pass author's name to the context
+        """
+        context = super().get_context_data(**kwargs)
+        context["author"] = self.kwargs.get("author", None)
+        return context
+
+
+class ListByTag(CategoryDatesMixin, ListView):
+    model = Post
+    context_object_name = "posts"
+    template_name = "posts/post_by_tag.html"
+    paginate_by = 5
+    ordering = ("-published_date",)
+
+    def get_queryset(self):
+        tag = self.kwargs.get("tag", None)
+        results = []
+        if tag:
+            results = Post.objects.filter(tags__name=tag)
+        return results
+
+    def get_context_data(self, **kwargs):
+        """
+        Pass tag name to the context
+        """
+        context = super().get_context_data(**kwargs)
+        context["tag"] = self.kwargs.get("tag", None)
+        return context
 
 
 
+
+
+
+class ListByCategory(CategoryDatesMixin, ListView):
+    model = Post
+    context_object_name = "blog"
+    template_name = "blog/post_by_category.html"
+    paginate_by = 5
+    ordering = ("-published_date",)
+
+    def get_queryset(self):
+        category = self.kwargs.get("name", None)
+        results = []
+        if category:
+            results = Post.objects.filter(category__name=category)
+        return results
+
+    def get_context_data(self, **kwargs):
+        """
+        Pass category's name to the context
+        """
+        context = super().get_context_data(**kwargs)
+        context["category"] = self.kwargs.get("name", None)
+        return context
+ 
+
+
+
+
+
+class DetailsPost(CategoryDatesMixin, DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+
+
+
+
+# Post archive views
+class ArchiveMixin:
+    model = Post
+    date_field = "published_date"
+    allow_future = False
+    context_object_name = "posts"
+
+############# Update Blog
+
+
+
+
+
+############ Busca no Blog 
 
 class SearchView(ListView):
-    template_name = 'search.html'
+    template_name = 'blog/search.html'
     model = Post
+    paginate_by = 5
+    ordering = ("-published_date",)
         
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query:
-            return Post.objects.filter(Q(content__icontains=query) | Q(title__icontains=query))
+            return Post.objects.filter(
+                Q(content__icontains=query) 
+                | Q(title__icontains=query)
+                | Q(category__icontains=query)
+            ).distinct()
             
         else:
             return Post.objects.all()
             
   
-class CategoryViewAll(ListView):
-    model = Category
-    template_name = 'category.html'
-    context_object_name = 'category'
-    def menu(request):
-        return {
-            'category':Category.objects.all().order_by('-name')
-    }
 
- 
-class CategoryView(ListView):
-    """
-    Displays the list of posts in a given category
-    Template: ``blog_posts_list.html``
-    Specific context variables:
-    - ``posts``
-    - ``page_title``
-    """
-    model = Post
-    template_name = 'post_list.html'
-    def get_queryset(self):
-        category = get_object_or_404(Category, slug=self.kwargs['slug'])
-        self.page_title = _('Posts in "{0}" category'.format(category.name))
-        return Post.objects.published().filter(categories__pk=category.pk)
-
-
-
-
-class CategoryListView(ListView):
-    """
-    Displays the list of categories that have posts in them
-    Template: ``blog_categories_list.html``
-    Specific context variables:
-    - ``categories``
-    """
-    template_name = 'category.html'
-    queryset = Category.objects.all()
-    context_object_name = 'category'
-
-
-
-
-
-#---------------------------
-# Class for add Posts
-#
-class PostCreateView(CreateView):
-    model = Post
-    fields = ('title', 'category', 'slug', 'author', 'updated_on', 'content', 'image', 'created_on', 'status')
-
-
-#================
-#  Class for delete 
-#

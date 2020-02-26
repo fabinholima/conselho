@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 {% block content %}
 
 
@@ -8,9 +8,9 @@
     <div class="col-md-8 card mb-4  mt-3 left  top">
       <div class="card-body">
         <h1>{% block title %} {{ object.title }} {% endblock title %}</h1>
-        <p class=" text-muted">{{ post.author }} | {{ post.created_on }}</p>
+        <p class=" text-muted">{{ post.author }} | {{ post.published_date }}</p>
         {% if object.image %}
-        <img class="container-fluid" src="{{ object.image.url }}" " alt="{{ post.caption_image }}" style="width:{{ post.width }}px;height:{{ post.height}}px;" />
+        <img class="container-fluid" src="{{ object.image.url }}"  alt="{{ post.caption_image }}" style="width:{{ post.width }}px;height:{{ post.height}}px;" />
     </br> 
 {% endif %}
         <p class="card-text ">{{ object.content | safe }}</p>

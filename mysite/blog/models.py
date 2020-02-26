@@ -2,58 +2,45 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
-from django.utils.translation import ugettext as _
 #from tinymce.models import HTMLField
+from django.urls import reverse
 
+from taggit.managers import TaggableManager
 
-
+# MarkDown form to context 
+#from markdownx.models import MarkdownxField
+#from markdownx.utils import markdownify
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=200)
-    slug = models.SlugField()
-    parent = models.ForeignKey('self',blank=True, null=True ,related_name='children',on_delete= models.CASCADE)
+    name = models.CharField(max_length=250)
+    #slug = models.SlugField(unique=True)
+    #parent = models.ForeignKey('self',blank=True, null=True ,related_name='children',on_delete= models.CASCADE)
 
 
     #def get_absolute_url(self):
     #    return reverse('category', kwargs={'slug': self.slug})
     
-    def get_absolute_url(self):
-        return "/categories/%s/"%self.slug
-
     class Meta:
-        #enforcing that there can not be two categories under a parent with same slug
-        
-        # __str__ method elaborated later in post.  use __unicode__ in place of
-        
-        # __str__ if you are using python 2
+        # app_label = "Category"
+        verbose_name_plural = "Categories"
 
-        unique_together = ('slug', 'parent',)    
-        verbose_name_plural = "categories" 
+    def __str__(self):
+        return self.name
 
-
-    def __str__(self):                           
-        full_path = [self.name]                  
-        k = self.parent
-        while k is not None:
-            full_path.append(k.name)
-            k = k.parent
-        return ' -> '.join(full_path[::-1])
+    def get_absolute_url(self):
+        return reverse("blog:category", kwargs={"name": self.name})
 
 
-
-
-
-STATUS = (
-    (0,"Draft"),
-    (1,"Publish")
-)
+#Class for Posts Blogs 
 
 class Post(models.Model):
+    STATUS = (("DRAFT", "Draft"), ("PUBLISHED", "Published"))
+
     title = models.CharField(max_length=200, unique=True)
-    category = models.ForeignKey(Category,on_delete= models.CASCADE)
-    slug = models.SlugField(max_length=200, unique=True)
-    author = models.ForeignKey(User, on_delete= models.CASCADE,related_name='blog_posts')
+    category = models.ForeignKey(Category,on_delete= models.PROTECT)
+    slug = models.SlugField(max_length=100, unique_for_date="published_date")
+    author = models.ForeignKey(User, on_delete= models.PROTECT,related_name='blog_posts')
     updated_on = models.DateTimeField(auto_now= True)
     content = models.TextField()
     #content = HTMLField()
@@ -61,42 +48,18 @@ class Post(models.Model):
     width=models.IntegerField(null=True, blank=True)
     image = models.ImageField(upload_to='static/blog/uploads/%Y/%m/%d/', null=True, blank=True)
     caption_image = models.CharField(max_length=200, null=True, blank=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    status = models.IntegerField(choices=STATUS, default=0)
+    published_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(default="DRAFT", choices=STATUS, max_length=10)
+
+    # tags mechanism
+    tags = TaggableManager(blank=True)
 
     class Meta:
-        ordering = ['-created_on']
+        ordering = ['-published_date']
 
     def __str__(self):
         return self.title
 
-
-
-
-class Tags(models.Model):
-    name = models.CharField(max_length=20, unique=True)
-    slug = models.CharField(max_length=20, unique=True)
-
-    def save(self, *args, **kwargs):
-        tempslug = slugify(self.name)
-        if self.id:
-            tag = Tags.objects.get(pk=self.id)
-            if tag.name != self.name:
-                self.slug = create_tag_slug(tempslug)
-        else:
-            self.slug = create_tag_slug(tempslug)
-        super(Tags, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-
-
-def create_tag_slug(tempslug):
-    slugcount = 0
-    while True:
-        try:
-            Tags.objects.get(slug=tempslug)
-            slugcount += 1
-            tempslug = tempslug + '-' + str(slugcount)
-        except ObjectDoesNotExist:
-            return tempslug
+    def get_absolute_url(self):
+        return reverse("blog:details_post", kwargs={"slug": self.slug})
+#

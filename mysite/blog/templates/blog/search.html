@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "blog/base.html" %}
 {% block content %}
 
 
@@ -15,9 +15,17 @@
 </div>
 
 {% else %}
-
+<div class="center">
 <p>Não existem posts para essa categoria.</p>
-
+</div>
 {% endif %}
 
-{% endblock %}
+
+  </div>
+</div>
+
+
+{% include 'pagination.html' %}
+
+
+{% endblock content%}

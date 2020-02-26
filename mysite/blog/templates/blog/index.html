@@ -1,0 +1,21 @@
+{% extends "base.html" %} 
+
+{% load filters %}
+
+{% block content %}  
+
+
+<div class="jumbotron" style="width:1700px">
+{% for post in post_list %}
+  <h1 class="display4">{{ post.title | safe}}</h1>
+  <p class="lead">{{ post.author }} | {{ post.published_date }} | {{post.category }}</p>
+  <hr class="my-text">
+  <p>{{post.content| safe | slice:":600" }}</p>
+  <p class=" ">
+    <a class="btn btn-primary btn-lg" href="{% url 'details_post' slug=post.slug  %}" role="button">Leia mais</a>
+  </p>
+{% endfor %}
+</div>
+{% include 'blog/pagination.html' %}
+
+{% endblock %}

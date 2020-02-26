@@ -43,7 +43,12 @@ INSTALLED_APPS = [
  #   'tinymce',
  #   'sorl.thumbnail',
  #   'mce_filebrowser',
-    'blog',
+     'blog',
+     'taggit',
+     'taggit_templatetags2',
+     'rest_framework'
+
+     
     
 ]
 
