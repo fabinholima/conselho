@@ -147,7 +147,7 @@ class ListByTag(CategoryDatesMixin, ListView):
 
 class ListByCategory(CategoryDatesMixin, ListView):
     model = Post
-    context_object_name = "blog"
+    #context_object_name = "blog"
     template_name = "blog/post_by_category.html"
     paginate_by = 5
     ordering = ("-published_date",)
@@ -203,11 +203,7 @@ class SearchView(ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query:
-            return Post.objects.filter(
-                Q(content__icontains=query) 
-                | Q(title__icontains=query)
-                | Q(category__icontains=query)
-            ).distinct()
+            return Post.objects.filter(Q(content__icontains=query)|Q(title__icontains=query))
             
         else:
             return Post.objects.all()

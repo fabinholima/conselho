@@ -1,4 +1,4 @@
-{% extends "blog/base.html" %}
+{% extends "base.html" %}
 {% block content %}
 
 
@@ -9,14 +9,14 @@
   <hr class="my-text">
   <p>{{post.content| safe | slice:":600" }}</p>
   <p class=" ">
-    <a class="btn btn-primary btn-lg" href="{% url 'post_detail' post.slug  %}" role="button">Learn more</a>
+    <a class="btn btn-primary btn-lg" href="{% url 'details_post' slug=post.slug  %}" role="button">Learn more</a>
   </p>
 {% endfor %}
 </div>
 
 {% else %}
-<div class="center">
-<p>Não existem posts para essa categoria.</p>
+<div class="jumbotron" style="width:1700px">
+  <p>Não existem posts para essa categoria.</p>
 </div>
 {% endif %}
 
@@ -25,7 +25,7 @@
 </div>
 
 
-{% include 'pagination.html' %}
+{% include 'blog/pagination.html' %}
 
 
 {% endblock content%}

@@ -34,8 +34,8 @@
     
 
    <!-- <link id="theme-style" rel="stylesheet" href="{% static 'css/theme.css' %}" >
-
-    -->
+   -->
+    
 
     
     <link id=theme-style rel="stylesheet" href="{% static 'css/theme.css' %}"> 
@@ -43,7 +43,6 @@
     
 </head>
 <body>
-  {% block nav-content %}
 
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <a class="navbar-brand" href="{% url 'index' %}">Blog</a>
@@ -79,43 +78,17 @@
     </div>
   </nav>
 
+{% include 'blog/menu.html' %}
 
 <!-- Codigo about-->
 
-<!-- Vertical navbar -->
-<div class="vertical-nav bg-white" id="sidebar">
-  <div class="py-4 px-3 mb-4 bg-light">
-    <div class="media d-flex align-items-center"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
-      <div class="media-body">
-        <h4 class="m-0">Fábio Lima</h4>
-        <p class="font-weight-light text-muted mb-0">Professor</p>
-      </div>
-    </div>
-  </div>
-
-  <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Menu</p>
- {% if categories %}
-  <ul class="nav flex-column bg-white mb-0">
-    {% for category in categories %}
-      <li class="nav-item">
-      <a href="{% url 'blog:category' name=category.name %}" class="nav-link text-dark font-italic bg-light">
-                <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
-                {{ category.name }}
-            </a>
-    </li>
-   {% endfor %}
-
-  </ul>
-{% endif %}
-</div>
-{% endblock %}
-
-
 <!-- Body page -->
+</body>
+
 
 {% block content %}
 
-  
+
 {% endblock content %}
 
 <!-- Footer -->
@@ -157,18 +130,15 @@
   </div>
   <!-- Footer Elements -->
 
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="#"> Fabio Lima</a>
-  </div>
-  <!-- Copyright -->
+    <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="#"> Fabio Lima</a>
+      </div>
+    <!-- Copyright -->
 
 </footer>
 <!-- Footer -->
 
-
-
-</div><!--//main-wrapper-->
 
 
     <!-- JavaScript (Opcional) -->
@@ -177,14 +147,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script id="dsq-count-scr" src="//fabiolima-com-br.disqus.com/count.js" async></script>
-    <script>
-      $(function() {
-  // Sidebar toggle behavior
-  $('#sidebarCollapse').on('click', function() {
-    $('#sidebar, #content').toggleClass('active');
-  });
-});
-
-    </script>
-    </html>
+   
+   
+</html>
 
