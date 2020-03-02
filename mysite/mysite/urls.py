@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     #url('ckeditor/', include('ckeditor.urls')),
     path('admin/', admin.site.urls),
+    path('tinymce/', include('tinymce.urls')),
     path('', include('blog.urls')),
     path('account/', include('django.contrib.auth.urls')),
     #path('api/', include('blog.api.urls')),  # REST api

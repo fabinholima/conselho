@@ -2,8 +2,8 @@ from django.contrib import admin
 from django import forms
 # Register your models here.
 from .models import Post, Category
-from ckeditor.widgets import CKEditorWidget
-
+#from ckeditor.widgets import CKEditorWidget
+from tinymce.models import HTMLField
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'status','created_on')
@@ -18,7 +18,8 @@ class CategoriaAdmin(admin.ModelAdmin):
 
 
 class PostAdminForm(forms.ModelForm):
-    content = forms.CharField(widget=CKEditorWidget())
+    #content = forms.CharField(widget=CKEditorWidget())
+    content = HTMLField('Content')    
     class Meta:
         model = Post
         fields = '__all__'

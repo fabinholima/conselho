@@ -2,21 +2,25 @@
 <!-- Vertical navbar -->
 <div class="vertical-nav bg-white">
     <div class="py-4 px-3 mb-4 bg-light">
-      <div class="media d-flex align-items-center"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
-        <div class="media-body">
+      <div class="media d-flex align-items-center"><img src="https://lh3.googleusercontent.com/-dvS5fu99nV8/VttAl9CaHnI/AAAAAAAAAHI/GK20PjcVTGUj8mBh_HoThRUzEONiMUmyQCEwYBhgL/w140-h139-p/227760_206223269409201_4757600_n.jpg" alt="..." width="125" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+          <div class="media-body">
           <h4 class="m-0">Fábio Lima</h4>
           <p class="font-weight-light text-muted mb-0">Professor</p>
         </div>
       </div>
-    </div>
-  
-    <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Menu</p>
+  </div>
+ 
+</div>
+ 
+<div class="sidebar">
+    <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">
+      Menu</p>
    {% if categories %}
-    <ul class="tete flex-column bg-white mb-0">
+    <ul class=" flex-column bg-white mb-0">
       {% for category in categories %}
         <li class="nav-item">
-        <a href="{% url 'category' name=category.name %}" class="nav-link text-dark font-italic bg-light">
-                  <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+        <a href="{% url 'category' name=category.name %}" class="nav-link text-dark  bg-light">
+                  <i class="fa fa-th-large text-primary fa-fw"></i>
                   {{ category.name }}
         </a>
       </li>

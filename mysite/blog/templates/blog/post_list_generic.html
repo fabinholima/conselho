@@ -1,24 +1,29 @@
-{% for post in posts %}
-        <div class="post">
-            <p><a href="{% url 'details_post' slug=post.slug %}"><h2>{{ post.title }}</h2></a></p>
-            <div class="row justify-content-between">
-                <div class="col-6">
-                Posted on &nbsp;<b>{{ post.published_date|date:"F j, Y" }}</b>&nbsp; by &nbsp;<b><a href="{% url 'posts:author' author=post.author.username %}">{{ post.author.username.capitalize }}</a></b>
-                |
-                <a href="{% url 'details_post' slug=post.slug %}">Comments (<span class="fb-comments-count" data-href="{{ request.build_absolute_uri }}/{{ post.slug }}/"></span>)</a>
-                </div>
+{% extends "base.html" %}
+{% block content %}
 
-                <div class="col-6 text-right">
-                    <b>Categories:</b> &nbsp;
-                    {% for category in post.category.all %}
-                        {% if not forloop.first %}/ {% endif %}
-                        <a href="{% url 'category' name=category.name %}">{{ category.name }}</a>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        <hr>
 
-{% empty %}
-    <p>No posts.</p>
+{% if post_list %}
+<div class="jumbotron" style="width:1700px">
+{% for post in post_list %}
+  <h1 class="display4">{{ post.title | safe}}</h1>
+  <hr class="my-text">
+  <p>{{post.content| safe | slice:":600" }}</p>
+  <p class=" ">
+    <a class="btn btn-primary btn-lg" href="{% url 'details_post' slug=post.slug  %}" role="button">Leia mais</a>
+  </p>
 {% endfor %}
+</div>
+
+{% else %}
+<div class="jumbotron" style="width:1700px">
+  <p>Não existem posts para essa categoria.</p>
+</div>
+{% endif %}
+
+
+  </div>
+</div>
+{% include 'blog/pagination.html' %}
+
+
+{% endblock content%}

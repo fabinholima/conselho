@@ -5,3 +5,4 @@ django-ckeditor
 django-tinymce4-lite
 django-filebrowser-no-grappelli
 djangorestframework
+pyenchant

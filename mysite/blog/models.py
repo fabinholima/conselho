@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from taggit.managers import TaggableManager
 
+from tinymce import models as tinymce_models
 # MarkDown form to context 
 #from markdownx.models import MarkdownxField
 #from markdownx.utils import markdownify
@@ -42,8 +43,9 @@ class Post(models.Model):
     slug = models.SlugField(max_length=100, unique_for_date="published_date")
     author = models.ForeignKey(User, on_delete= models.PROTECT,related_name='blog_posts')
     updated_on = models.DateTimeField(auto_now= True)
-    content = models.TextField()
+    #content = models.TextField()
     #content = HTMLField()
+    content = tinymce_models.HTMLField()
     height=models.IntegerField(null=True, blank=True)
     width=models.IntegerField(null=True, blank=True)
     image = models.ImageField(upload_to='static/blog/uploads/%Y/%m/%d/', null=True, blank=True)

@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #grappelli',
+    #'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'ckeditor',
-    'ckeditor_uploader',
- #   'tinymce',
+    #'ckeditor',
+    #'ckeditor_uploader',
+    'tinymce',
  #   'sorl.thumbnail',
  #   'mce_filebrowser',
      'blog',
@@ -232,16 +234,8 @@ MEDIAFILES_DIRS = (
 
 
 
-
-
-
+FILEBROWSER_SHOW_IN_DASHBOARD = True
 ''' 
-STATIC_JS_DIR = os.path.join(STATIC_URL)
-TINYMCE_JS_ROOT = os.path.join(STATIC_JS_DIR, "tiny_mce")
-TINYMCE_JS_URL = os.path.join(TINYMCE_JS_ROOT, "tiny_mce.js")
-
-
-
 
 TINYMCE_DEFAULT_CONFIG = {
 'theme': "advanced", # default value
@@ -275,8 +269,8 @@ TINYMCE_DEFAULT_CONFIG = {
     "Webdings=webdings;" +
     "Wingdings=wingdings,zapf dingbats",}
 
-'''
 
+''' 
 
 
 #MEDIA_URL='/media/'

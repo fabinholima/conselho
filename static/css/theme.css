@@ -25,13 +25,32 @@
 *
 */
 
+.sidebar {
+	width: 17rem;
+    height: 100vh;
+    position: fixed;
+    top: 13.5rem;
+    margin-left: auto;
+    z-index: 999;
+	color: #333;
+	transition: all .3s;
+	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+	text-align: left;
+	
+}
+
+ul {
+	list-style-type: none;
+	padding: 0rem;
+}
+
 
 .vertical-nav {
 	min-width: 7rem;
 	width: 17rem;
 	height: 100hv;
 	position: fixed;
-	top: 10;
+	top: 4rem;
 	left: 0;
 	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
 	transition: all 0.4s;
@@ -43,10 +62,10 @@
 	transition: all 0.4s;
   }
   
-  /* for toggle behavior */
+
   
   #sidebar.active {
-	margin-left: -17rem;
+	margin-left: 17rem;
   }
   
   #content.active {
@@ -56,7 +75,7 @@
   
   @media (max-width: 768px) {
 	#sidebar {
-	  margin-left: -17rem;
+	  margin-left: 0rem;
 	}
 	#sidebar.active {
 	  margin-left: 0;
@@ -71,6 +90,9 @@
 	}
   }
   
+
+
+
 
 /* Blog Posts  */
 
@@ -100,17 +122,19 @@ body {
 } 
 
 .container-fluid{
-	margin-top: 60px;
-	padding: 10px;
+	margin-top: -2rem;
+	padding: 7rem;
+	right: 5rem;
 
 }
 
 .jumbotron{
 	float: center;
-	margin-top: 10px;
-  	margin-left: 400px;
-  	margin-right: 10px;
-  	background: #ffffff;
+	margin-top: 0rem;
+  	margin-left: 40rem;
+  	margin-right: 2rem;
+	background: #ffffff;
+	
 }	
 
 
@@ -145,11 +169,8 @@ figure{
 	font-size: 16px;
  	font-weight: initial;
  	opacity: 50%
- 	text-decoration: all;	
-
-
-}
-
+ 	text-decoration: all;	}
+/*
 
 code {
     background-color: #eee;
@@ -158,7 +179,7 @@ code {
     padding: 0 3px;
 }
 
-
+*/
 
 /***********************
 
@@ -175,44 +196,17 @@ Buton
     display: inline-block;
     vertical-align: top;
 }
-
-.vertical-menu {
-  margin-top: 60px;		
-  
-  margin-right: 2em;
-  vertical-align: top;
-  width: 100px; /* Set a width if you like */
-  height: auto;
-  display: block;
-}
-
-.vertical-menu a {
-  background-color: #eee; /* Grey background color */
-  color: black; /* Black text color */
-  display: block; /* Make the links appear below each other */
-  padding: 20px; /* Add some padding */
-  text-decoration: none; /* Remove underline from links */
-}
-
-.vertical-menu a:hover {
-  background-color: #ccc; /* Dark grey background on mouse-over */
-}
-
-.vertical-menu a.active {
-  background-color: #4CAF50; /* Add a green color to the "active/current" link */
-  color: white;
-}
-
-
+`
 
 /************/
 
 
 .row {
+	float: center;
     margin-left: 0;
-    margin-right: 0;
-    position: relative;
-
+	margin-right: 0rem;
+	top: 0rem;
+	vertical-align: 1rem;
 
 }
 
