@@ -5,6 +5,11 @@ from .models import Post, Category
 #from ckeditor.widgets import CKEditorWidget
 from tinymce.models import HTMLField
 
+
+from mce_filebrowser.admin import MCEFilebrowserAdmin
+
+
+
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'status','created_on')
     list_filter = ("status",)
@@ -28,5 +33,9 @@ class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
 
 #class Post  
+class MyModelAdmin(MCEFilebrowserAdmin):
+    pass
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category)

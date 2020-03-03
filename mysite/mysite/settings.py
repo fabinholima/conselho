@@ -42,9 +42,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     #'ckeditor',
     #'ckeditor_uploader',
-    'tinymce',
+    #'tinymce',
  #   'sorl.thumbnail',
  #   'mce_filebrowser',
+    'froala_editor',
      'blog',
      'taggit',
      'taggit_templatetags2',
@@ -55,16 +56,24 @@ INSTALLED_APPS = [
 ]
 
 
+
+
 ## Config para authethication
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+FRAOLA_EDITOR_THIRD_PARTY = ('image_aviary', 'spell_checker')
+
+FROALA_EDITOR_PLUGINS = ('align', 'char_counter', 'code_beautifier' ,'code_view', 'colors', 'draggable', 'emoticons',
+        'entities', 'file', 'font_family', 'font_size', 'fullscreen', 'image_manager', 'image', 'inline_style',
+        'line_breaker', 'link', 'lists', 'paragraph_format', 'paragraph_style', 'quick_insert', 'quote', 'save', 'table',
+        'url', 'video')
 
 
 
-MPTT_ADMIN_LEVEL_INDENT = 20
+#FROALA_UPLOAD_PATH="/media/froala/"
 
-
+#USE_FROALA_EDITOR=True
 
 CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 CKEDITOR_UPLOAD_PATH = "/media/uploads/"
@@ -234,7 +243,6 @@ MEDIAFILES_DIRS = (
 
 
 
-FILEBROWSER_SHOW_IN_DASHBOARD = True
 ''' 
 
 TINYMCE_DEFAULT_CONFIG = {

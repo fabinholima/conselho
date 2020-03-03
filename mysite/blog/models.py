@@ -7,7 +7,10 @@ from django.urls import reverse
 
 from taggit.managers import TaggableManager
 
-from tinymce import models as tinymce_models
+#from tinymce import models as tinymce_models
+from froala_editor.fields import FroalaField
+
+#from tinymce.models import HTMLField
 # MarkDown form to context 
 #from markdownx.models import MarkdownxField
 #from markdownx.utils import markdownify
@@ -43,9 +46,11 @@ class Post(models.Model):
     slug = models.SlugField(max_length=100, unique_for_date="published_date")
     author = models.ForeignKey(User, on_delete= models.PROTECT,related_name='blog_posts')
     updated_on = models.DateTimeField(auto_now= True)
-    #content = models.TextField()
+    #content = models.TextField(widget=FroalaEditor(options={'toolbarInline': True,}))
+    #content = FroalaField(options={'toolbarInline': True,})
     #content = HTMLField()
-    content = tinymce_models.HTMLField()
+    #content = tinymce_models.HTMLField()
+    content = FroalaField()
     height=models.IntegerField(null=True, blank=True)
     width=models.IntegerField(null=True, blank=True)
     image = models.ImageField(upload_to='static/blog/uploads/%Y/%m/%d/', null=True, blank=True)

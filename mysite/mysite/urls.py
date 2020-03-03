@@ -18,12 +18,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 #from blog.feeds import LastEntriesFeed
+from froala_editor import views
 
 
 urlpatterns = [
     #url('ckeditor/', include('ckeditor.urls')),
     path('admin/', admin.site.urls),
-    path('tinymce/', include('tinymce.urls')),
+    path('froala_editor/',include('froala_editor.urls')),
+    #path('tinymce/', include('tinymce.urls')),
     path('', include('blog.urls')),
     path('account/', include('django.contrib.auth.urls')),
     #path('api/', include('blog.api.urls')),  # REST api
