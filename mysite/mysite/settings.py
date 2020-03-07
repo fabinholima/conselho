@@ -62,6 +62,8 @@ INSTALLED_APPS = [
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+#FROALA_EDITOR_OPTIONS =('.selector', {heightMax: 500})
+
 FRAOLA_EDITOR_THIRD_PARTY = ('image_aviary', 'spell_checker')
 
 FROALA_EDITOR_PLUGINS = ('align', 'char_counter', 'code_beautifier' ,'code_view', 'colors', 'draggable', 'emoticons',
