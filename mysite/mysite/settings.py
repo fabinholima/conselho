@@ -47,6 +47,8 @@ INSTALLED_APPS = [
  #   'mce_filebrowser',
     'froala_editor',
      'blog',
+     'agenda',
+     'escola',
      'taggit',
      'taggit_templatetags2',
      'rest_framework'

@@ -12,6 +12,9 @@
  
 </div>
  
+
+
+
 <div class="sidebar">
     <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">
       Menu</p>
@@ -19,7 +22,7 @@
     <ul class=" flex-column bg-white mb-0">
       {% for category in categories %}
         <li class="nav-item">
-        <a href="{% url 'category' name=category.name %}" class="nav-link text-dark  bg-light">
+        <a href="{% url 'blog:category' name=category.name %}" class="nav-link text-dark  bg-light">
                   <i class="fa fa-th-large text-primary fa-fw"></i>
                   {{ category.name }}
         </a>
@@ -30,3 +33,23 @@
   {% endif %}
 </div>
   
+
+
+<!-- Codigo recents posts -->
+
+<div class="sidebar-recent">
+  <i class="fas fa-clock"></i>&nbsp;<b></b>Recent Posts</b>
+  <ul class="list-group">
+    {% for post in recent_posts %}
+    <li>
+        &raquo;&nbsp;<a href="{% url 'blog:details_post' slug=post.slug %}"> <i class="fas fa-check-circle text-primary fa-fw"></i> {{ post }}</a>
+    </li>
+{% empty %}
+    <p>No posts.</p>
+{% endfor %}
+  </ul>
+</div>
+
+
+
+

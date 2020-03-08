@@ -17,21 +17,23 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
 #from blog.feeds import LastEntriesFeed
 from froala_editor import views
+import agenda, blog, escola
 
 
 urlpatterns = [
     #url('ckeditor/', include('ckeditor.urls')),
     path('admin/', admin.site.urls),
     path('froala_editor/',include('froala_editor.urls')),
-    #path('tinymce/', include('tinymce.urls')),
-    path('', include('blog.urls')),
+    path('', include('blog.urls', namespace='blog')),
     path('account/', include('django.contrib.auth.urls')),
     #path('api/', include('blog.api.urls')),  # REST api
-
-
-
+    #path("api/v1/", include(router.urls)),
+    #path('agenda/', include('agenda.urls', namespace="agenda")),
+    path('agenda/', include('agenda.urls', namespace='agenda')),
+    
 ] 
 
 if settings.DEBUG:

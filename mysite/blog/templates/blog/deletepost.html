@@ -1,0 +1,14 @@
+{% extends 'base2.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %} {% if update %}Update{% else %}Adicionar{% endif %} Post {% endblock %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <button type="submit" value="Confirm" class="btn btn-danger">Delete</button>
+  </form>
+{% endblock %}

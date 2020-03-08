@@ -7,6 +7,8 @@ from django.utils import timezone
 from .models import Post, Category
 from taggit.models import Tag
 
+from .forms import AddPostForm
+
 from .forms import ContactForm
 
 # complex lookups (for searching)
@@ -120,8 +122,8 @@ class ListByAuthor(CategoryDatesMixin, ListView):
 
 class ListByTag(CategoryDatesMixin, ListView):
     model = Post
-    context_object_name = "posts"
-    template_name = "posts/post_by_tag.html"
+    context_object_name = "blog"
+    template_name = "blog/post_by_tag.html"
     paginate_by = 5
     ordering = ("-published_date",)
 
@@ -139,9 +141,6 @@ class ListByTag(CategoryDatesMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["tag"] = self.kwargs.get("tag", None)
         return context
-
-
-
 
 
 
@@ -187,6 +186,27 @@ class ArchiveMixin:
     context_object_name = "posts"
 
 ############# Update Blog
+
+
+class AddPost( #CategoryDatesMixin, PermissionRequiredMixin, LoginRequiredMixin, 
+    CreateView
+):
+    form_class = AddPostForm
+    permission_required = "posts.add_post"
+    template_name = "blog/addpost.html"
+
+class DeletePost( #CategoryDatesMixin, LoginRequiredMixin, UserPassesTestMixin, 
+    DeleteView
+):
+    model = Post
+    success_url = reverse_lazy("blog:index")
+
+    def test_func(self):
+        """
+        Only let the user delete object if they own the object being deleted
+        """
+        return self.get_object().author.username == self.request.user.username
+
 
 
 

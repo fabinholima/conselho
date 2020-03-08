@@ -45,7 +45,7 @@
 <body>
 
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-    <a class="navbar-brand" href="{% url 'index' %}">Blog</a>
+    <a class="navbar-brand" href="{% url 'blog:index' %}">Blog</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -55,20 +55,20 @@
           <a class="nav-link" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Categorias</a>
+          <a class="nav-link" href="/escola">Escola</a>
         </li>
          <li class="nav-item">
-          <a class="nav-link" href="#">Outros</a>
+          <a class="nav-link" href="agenda/">Agenda</a>
         </li>
          <li class="nav-item">
-          <a class="nav-link" href="{% url 'contact' %}">Contato</a>
+          <a class="nav-link" href="{% url 'blog:contact' %}">Contato</a>
         </li>
         <li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
+          <a class="nav-link" href="/admin">Login</a>
         </li>
       </ul>
-      <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'search' %}">
+      <form class="form-inline mt-2 mt-md-0" method="GET" action="{% url 'blog:search' %}">
         <input class="form-control mr-sm-2" 
          type="text" placeholder="Search" id="id_q" 
          aria-label="Search" name="q" required value="{{ request.GET.q}}">
@@ -77,10 +77,24 @@
                  
     </div>
   </nav>
+<!--
+  <div class="sidebar-tags">
+    <i class="fas fa-tag"></i><b>Tags</b>
+    <p>
+        {% get_tagcloud as tags %}
+        <ul class="list-unstyled list-inline font-weight-bold mt-2">
+        {% for tag in tags %}
+            <li class="list-inline-item p-1">
+                <a class="btn btn-sm btn-secondary" href="{% url 'blog:tag' tag=tag %}">{{ tag }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </p>
+  </div>
+-->
+  {% include 'blog/menu.html' %}
 
-{% include 'blog/menu.html' %}
 
-<!-- Codigo about-->
 
 <!-- Body page -->
 </body>

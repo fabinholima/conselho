@@ -1,0 +1,7 @@
+from django.urls import path , include, re_path
+from agenda.views import *
+
+app_name='agenda'
+urlpatterns = [
+    path('', AgendaHome, name="agenda"),
+]
