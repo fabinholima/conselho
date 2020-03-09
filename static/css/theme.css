@@ -91,10 +91,34 @@ ul {
   }
   
 
+/* Menu tags  */
+
+.sidenav {
+	height: 100%;
+	width: 300px;
+	position: fixed;
+	z-index: 1;
+	top: 10;
+	padding-top: 20px;
+	padding-left: 138rem;
+  }
+  
+  .sidebar-recent{
+	  position: fixed;
+	  padding-top:4rem;
+	  margin-left: 72rem;
+	}
 
 
+	.sidebar-tags{
+		position: fixed;
+		padding-top:14rem;
+		margin-left: 72rem;
+	  }
 
 /* Blog Posts  */
+
+
 
 body {
   min-height: 75rem;
@@ -122,7 +146,7 @@ body {
 } 
 
 .container-fluid{
-	margin-top: -2rem;
+	margin-top: -5rem;
 	padding: 7rem;
 	right: 5rem;
 
@@ -130,7 +154,7 @@ body {
 
 .jumbotron{
 	float: center;
-	margin-top: 0rem;
+	margin-top: 1rem;
   	margin-left: 20rem;
   	margin-right: 12rem;
 	background: #ffffff;

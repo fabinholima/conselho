@@ -3,12 +3,8 @@ from django import forms
 # Register your models here.
 from .models import Post, Category
 #from ckeditor.widgets import CKEditorWidget
-from tinymce.models import HTMLField
-
-
-from mce_filebrowser.admin import MCEFilebrowserAdmin
-
-
+#from tinymce.models import HTMLField
+from froala_editor.fields import FroalaField
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'status','created_on')
@@ -24,17 +20,13 @@ class CategoriaAdmin(admin.ModelAdmin):
 
 class PostAdminForm(forms.ModelForm):
     #content = forms.CharField(widget=CKEditorWidget())
-    content = HTMLField('Content')    
+    content = FroalaField()    
     class Meta:
         model = Post
         fields = '__all__'
 
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
-
-#class Post  
-class MyModelAdmin(MCEFilebrowserAdmin):
-    pass
 
 
 admin.site.register(Post, PostAdmin)

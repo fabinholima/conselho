@@ -9,7 +9,7 @@
   <hr class="my-text">
   <p>{{post.content| safe | slice:":600" }}</p>
   <p class=" ">
-    <a class="btn btn-primary btn-lg" href="{% url 'details_post' slug=post.slug  %}" role="button">Leia mais</a>
+    <a class="btn btn-primary btn-lg" href="{% url 'blog:details_post' slug=post.slug  %}" role="button">Leia mais</a>
   </p>
 {% endfor %}
 </div>

@@ -6,7 +6,13 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from .models import Category, Post
 from taggit.forms import TagWidget
+from froala_editor.widgets import FroalaEditor
 
+
+class PageForm(forms.ModelForm):
+  content = forms.CharField(widget=FroalaEditor(options={
+    'toolbarInline': True,
+  }))
 
 
 def make_slug(instance, new_slug=None):
@@ -29,8 +35,36 @@ class ContactForm(forms.Form):
     subject = forms.CharField(required=True)
     message = forms.CharField(widget=forms.Textarea, required=True)
 
+class AddPostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        exclude = ("slug", "date")
+        title= forms.CharField(required=True)
+        content = forms.CharField(widget=FroalaEditor(options={
+    'toolbarInline': True,
+  }))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        title = cleaned_data.get("title")
+        slug = cleaned_data.get("slug")
+
+        if not slug and title:
+            cleaned_data["slug"] = slugify(title)
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.slug = make_slug(instance)
+
+        if commit:
+            instance.save()
+            self.save_m2m()
+        return instance
 
 
+'''
 class AddPostForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -77,3 +111,4 @@ class AddPostForm(forms.ModelForm):
             instance.save()
             self.save_m2m()
         return instance
+'''
