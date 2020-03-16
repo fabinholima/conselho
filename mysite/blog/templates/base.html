@@ -52,13 +52,13 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item ">
-          <a class="nav-link" href="#">Home</a>
+          <a class="nav-link" href="{% url 'blog:index' %}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/escola">Escola</a>
+          <a class="nav-link" href="{% url 'escola:home' %}">Escola</a>
         </li>
          <li class="nav-item">
-          <a class="nav-link" href="agenda/">Agenda</a>
+          <a class="nav-link" href="{% url 'agenda:agenda' %}">Agenda</a>
         </li>
          <li class="nav-item">
           <a class="nav-link" href="{% url 'blog:contact' %}">Contato</a>

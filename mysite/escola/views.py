@@ -1,5 +1,5 @@
 from django.shortcuts import render
 
 # Create your views here.
-def EscolaView(request)
-    return render ("Hello Escola")
+def EscolaHome(request):
+    return render (request, "escola/escola.html")

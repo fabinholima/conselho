@@ -31,7 +31,7 @@ urlpatterns = [
     path('account/', include('django.contrib.auth.urls')),
     #path('api/', include('blog.api.urls')),  # REST api
     #path("api/v1/", include(router.urls)),
-    #path('agenda/', include('agenda.urls', namespace="agenda")),
+    path('escola/', include('escola.urls', namespace="escola")),
     path('agenda/', include('agenda.urls', namespace='agenda')),
     
 ] 
